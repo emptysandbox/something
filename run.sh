@@ -77,7 +77,7 @@ chmod +x screen.sh
 
 sudo apt install screen -y
 
-for i in {1..4}; do
+for i in {1..5}; do
     echo -e "\nscreen -d -m -L -S screen$i ./screen.sh $i"
     sleep 5
     screen -d -m -L -S screen$i ./screen.sh $i
